@@ -1,8 +1,8 @@
 import wikipedia
 from telegram import Update, Bot
 from telegram.ext import run_async, Filters
-from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
+from IHbot import dispatcher
+from IHbot.modules.disable import DisableAbleCommandHandler
 
 def wiki(bot: Bot, update: Update):
         query = str(update.effective_message.text[6:])
