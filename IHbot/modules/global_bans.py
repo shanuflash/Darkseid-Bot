@@ -54,15 +54,15 @@ def gban(bot: Bot, update: Update, args: List[str]):
         return
 
     if int(user_id) in SUDO_USERS:
-        message.reply_text("I spy, with my little eye... a sudo user war! Why are you guys turning on each other?")
+        message.reply_text("I spy, with my little eye... a sudo user war! Are you both Gays Nibba?")
         return
 
     if int(user_id) in SUPPORT_USERS:
-        message.reply_text("OOOH someone's trying to gban a support user! *grabs popcorn*")
+        message.reply_text("OOOH someone's trying to gban a support user! *gets ready to fap*")
         return
 
     if user_id == bot.id:
-        message.reply_text("-_- So funny, lets gban myself why don't I? Nice try.")
+        message.reply_text("-_- So funny, lets gban myself why don't I? Suck My Dick.")
         return
 
     try:
@@ -224,7 +224,7 @@ def check_and_ban(update, user_id, should_message=True):
     if sql.is_user_gbanned(user_id):
         update.effective_chat.kick_member(user_id)
         if should_message:
-            update.effective_message.reply_text("This is a bad person, they shouldn't be here!")
+            update.effective_message.reply_text("This is a AAA GRADE ASSHOLE, they shouldn't be here!")
 
 
 @run_async
