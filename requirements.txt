@@ -11,3 +11,4 @@ spongemock
 geopy
 PyLyrics
 gsearch
+wikipedia
