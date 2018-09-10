@@ -28,7 +28,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("You don't seem to be referring to a user, noob admin 😒. ")
         return ""
 
     try:
@@ -45,7 +45,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna BAN myself, are you high?")
+        message.reply_text("Fuck You, I'm not gonna BAN myself")
         return ""
 
     log = "<b>{}:</b>" \
@@ -91,7 +91,7 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("You don't seem to be referring to a user, noob admin 😒.")
         return ""
 
     try:
@@ -108,7 +108,7 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna BAN myself, are you high?")
+        message.reply_text("Fuck You,I'm not gonna BAN myself")
         return ""
 
     if not reason:
@@ -228,7 +228,7 @@ def kickme(bot: Bot, update: Update):
         update.effective_message.reply_text("Oof, I can't kick my master.")
         return 
     elif is_user_admin(update.effective_chat, user_id):
-          update.effective_message.reply_text("I wish I could... but you're an admin.")
+          update.effective_message.reply_text("I wish I could... but you're an fucking admin.")
           return
 
     res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
@@ -249,7 +249,7 @@ def banme(bot: Bot, update: Update):
         update.effective_message.reply_text("Oof, I can't ban my master.")
         return
     elif is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("I wish I could... but you're an admin.")
+        update.effective_message.reply_text("I wish I could... but you're fucking admin.")
         return
 
     res = update.effective_chat.kick_member(user_id)
