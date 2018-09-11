@@ -8,9 +8,13 @@ def google(bot: Bot, update: Update):
         result_ = subprocess.run(['gsearch', str(query)], stdout=subprocess.PIPE)
         result = str(result_.stdout.decode())
         update.effective_message.reply_markdown('*Searching:*\n`' + str(query) + '`\n\n*RESULTS:*\n' + result)
- __help__ = """
+
+__help__ = """
  - /google: Google search
  """
- __mod_name__ = "Google"
- GOOGLE_HANDLER = DisableAbleCommandHandler("google", google)
- dispatcher.add_handler(GOOGLE_HANDLER)
+
+__mod_name__ = "Google"
+
+GOOGLE_HANDLER = DisableAbleCommandHandler("google", google)
+
+dispatcher.add_handler(GOOGLE_HANDLER)
