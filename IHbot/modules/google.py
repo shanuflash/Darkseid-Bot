@@ -5,7 +5,7 @@ from IHbot import dispatcher
 from IHbot.modules.disable import DisableAbleCommandHandler
 def google(bot: Bot, update: Update):
         query = update.effective_message.text.split(" ",1)
-        result_ = subprocess.run(['gsearch', str(query[1]), stdout=subprocess.PIPE)
+        result_ = subprocess.run(['gsearch', str(query[1])], stdout=subprocess.PIPE)
         result = str(result_.stdout.decode())
         update.effective_message.reply_markdown('*Searching:*\n`' + str(query[1]) + '`\n\n*RESULTS:*\n' + result)
 
