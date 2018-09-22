@@ -1,5 +1,13 @@
 import random, re
 from spongemock import spongemock
+from zalgo_text import zalgo
+from deeppyer import deepfry
+import os
+from pathlib import Path
+
+import nltk # shitty lib, but it does work
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
 
 from typing import Optional, List
 from telegram import Message, Update, Bot, User
@@ -114,6 +122,100 @@ def spongemocktext(bot: Bot, update: Update):
     reply_text = spongemock.mock(data)
     message.reply_to_message.reply_text(reply_text)
 
+
+@run_async
+def zalgotext(bot: Bot, update: Update):
+    message = update.effective_message
+    if message.reply_to_message:
+        data = message.reply_to_message.text
+    else:
+        data = ''
+
+    z = zalgo.zalgo()
+    reply_text = z.zalgofy(data)
+    message.reply_to_message.reply_text(reply_text)
+
+# Less D A N K modules by @skittles9823 # holi fugg I did some maymays ^^^
+# shitty maymay modules made by @divadsn vvv
+
+@run_async
+def forbesify(bot: Bot, update: Update):
+    message = update.effective_message
+    if message.reply_to_message:
+        data = message.reply_to_message.text
+    else:
+        data = ''
+
+    data = data.lower()
+    accidentals = ['VB', 'VBD', 'VBG', 'VBN']
+    reply_text = data.split()
+    offset = 0
+
+    # use NLTK to find out where verbs are
+    tagged = dict(nltk.pos_tag(reply_text))
+
+    # let's go through every word and check if it's a verb
+    # if yes, insert ACCIDENTALLY and increase offset
+    for k in range(len(reply_text)):
+        i = reply_text[k + offset]
+        if tagged.get(i) in accidentals:
+            reply_text.insert(k + offset, 'accidentally')
+            offset += 1
+
+    reply_text = string.capwords(' '.join(reply_text))
+    message.reply_to_message.reply_text(reply_text)
+
+
+@run_async
+def deepfryer(bot: Bot, update: Update):
+    message = update.effective_message
+    if message.reply_to_message:
+        data = message.reply_to_message.photo
+        data2 = message.reply_to_message.sticker
+    else:
+        data = []
+        data2 = []
+
+    # check if message does contain a photo and cancel when not
+    if not data and not data2:
+        message.reply_text("What am I supposed to do with this?!")
+        return
+
+    # download last photo (highres) as byte array
+    if data:
+        photodata = data[len(data) - 1].get_file().download_as_bytearray()
+        image = Image.open(io.BytesIO(photodata))
+    elif data2:
+        sticker = bot.get_file(data2.file_id)
+        sticker.download('sticker.png')
+        image = Image.open("sticker.png")
+ 
+    # the following needs to be executed async (because dumb lib)
+    loop = asyncio.new_event_loop()
+    loop.run_until_complete(process_deepfry(image, message.reply_to_message, bot))
+    loop.close()
+
+async def process_deepfry(image: Image, reply: Message, bot: Bot):
+    # DEEPFRY IT
+    image = await deepfry(
+        img=image,
+        token=DEEPFRY_TOKEN,
+        url_base='westeurope'
+    )
+
+    bio = BytesIO()
+    bio.name = 'image.jpeg'
+    image.save(bio, 'JPEG')
+
+    # send it back
+    bio.seek(0)
+    reply.reply_photo(bio)
+    if Path("sticker.png").is_file():
+        os.remove("sticker.png")
+
+# shitty maymay modules made by @divadsn ^^^
+
+# no help string
 __help__ = """
 - Reply to a text with /🅱️ or /😂 or /👏
 - You can also use the text version of these : /bmoji or /copypasta or /clapmoji
