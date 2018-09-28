@@ -12,3 +12,4 @@ geopy
 PyLyrics
 gsearch
 wikipedia
+zalgo-text

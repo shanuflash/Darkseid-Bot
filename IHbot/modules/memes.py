@@ -1,4 +1,6 @@
-import random, re
+import random, re, string, io, asyncio
+from PIL import Image
+from io import BytesIO
 from spongemock import spongemock
 
 from typing import Optional, List
@@ -6,7 +8,7 @@ from telegram import Message, Update, Bot, User
 from telegram import MessageEntity
 from telegram.ext import Filters, MessageHandler, run_async
 
-from IHbot import dispatcher
+from IHbot import dispatcher, DEEPFRY_TOKEN
 from IHbot.modules.disable import DisableAbleCommandHandler
 
 WIDE_MAP = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
@@ -74,12 +76,14 @@ def owo(bot: Bot, update: Update):
     reply_text += ' ' + random.choice(faces)
     message.reply_to_message.reply_text(reply_text)
 
+
 @run_async
 def stretch(bot: Bot, update: Update):
     message = update.effective_message
     count = random.randint(3, 10)
     reply_text = re.sub(r'([aeiouAEIOUａｅｉｏｕＡＥＩＯＵ])', (r'\1' * count), message.reply_to_message.text)
     message.reply_to_message.reply_text(reply_text)
+
 
 @run_async
 def vapor(bot: Bot, update: Update, args: List[str]):
@@ -103,6 +107,9 @@ def vapor(bot: Bot, update: Update, args: List[str]):
     else:
         message.reply_to_message.reply_text(reply_text)
 
+# D A N K modules by @deletescape ^^^
+# Less D A N K modules by @skittles9823 # holi fugg I did some maymays vvv
+
 @run_async
 def spongemocktext(bot: Bot, update: Update):
     message = update.effective_message
@@ -115,34 +122,30 @@ def spongemocktext(bot: Bot, update: Update):
     message.reply_to_message.reply_text(reply_text)
 
 __help__ = """
-- Reply to a text with /🅱️ or /😂 or /👏
-- You can also use the text version of these : /bmoji or /copypasta or /clapmoji
-- /vapor : Converts the text into monospace
-- /stretch : Stretches the text
-- /owo : Adds random owo reactions
-- /mock : Converts text into alternate capital and small letters
+ many memz
+ Thanks @deletescape and @divadsn for the meme commands :D
 """
 
 __mod_name__ = "Memes"
 
-COPYPASTA_HANDLER = DisableAbleCommandHandler("copypasta", copypasta)
-COPYPASTA_ALIAS_HANDLER = DisableAbleCommandHandler("😂", copypasta)
-CLAPMOJI_HANDLER = DisableAbleCommandHandler("clapmoji", clapmoji)
-CLAPMOJI_ALIAS_HANDLER = DisableAbleCommandHandler("👏", clapmoji)
-BMOJI_HANDLER = DisableAbleCommandHandler("🅱", bmoji)
-BMOJI_ALIAS_HANDLER = DisableAbleCommandHandler("bmoji", bmoji)
-OWO_HANDLER = DisableAbleCommandHandler("owo", owo)
+COPYPASTA_HANDLER = DisableAbleCommandHandler("😂", copypasta)
+CLAPMOJI_HANDLER = DisableAbleCommandHandler("👏", clapmoji, admin_ok=True)
+BMOJI_HANDLER = DisableAbleCommandHandler("🅱", bmoji, admin_ok=True)
+OWO_HANDLER = DisableAbleCommandHandler("owo", owo, admin_ok=True)
 STRETCH_HANDLER = DisableAbleCommandHandler("stretch", stretch)
-VAPOR_HANDLER = DisableAbleCommandHandler("vapor", vapor, pass_args=True)
+VAPOR_HANDLER = DisableAbleCommandHandler("vapor", vapor, pass_args=True, admin_ok=True)
 MOCK_HANDLER = DisableAbleCommandHandler("mock", spongemocktext, admin_ok=True)
+ZALGO_HANDLER = DisableAbleCommandHandler("zalgofy", zalgotext)
+FORBES_HANDLER = DisableAbleCommandHandler("forbes", forbesify, admin_ok=True)
+DEEPFRY_HANDLER = DisableAbleCommandHandler("deepfry", deepfryer, admin_ok=True)
 
 dispatcher.add_handler(COPYPASTA_HANDLER)
-dispatcher.add_handler(COPYPASTA_ALIAS_HANDLER)
 dispatcher.add_handler(CLAPMOJI_HANDLER)
-dispatcher.add_handler(CLAPMOJI_ALIAS_HANDLER)
 dispatcher.add_handler(BMOJI_HANDLER)
-dispatcher.add_handler(BMOJI_ALIAS_HANDLER)
 dispatcher.add_handler(OWO_HANDLER)
 dispatcher.add_handler(STRETCH_HANDLER)
 dispatcher.add_handler(VAPOR_HANDLER)
 dispatcher.add_handler(MOCK_HANDLER)
+dispatcher.add_handler(ZALGO_HANDLER)
+dispatcher.add_handler(FORBES_HANDLER)
+dispatcher.add_handler(DEEPFRY_HANDLER)
