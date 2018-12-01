@@ -20,13 +20,13 @@ from IHbot.modules.sql import users_sql
 LOCK_TYPES = {'stickers': Filters.sticker,
               'audio': Filters.audio,
               'voice': Filters.voice,
-              'document': Filters.document & ~Filters.animation,
-              'video': Filters.video,
-              'videonote': Filters.video_note,
-              'contact': Filters.contact,
-              'photo': Filters.photo,
-              'gif': Filters.animation,
-              'url': Filters.entity(MessageEntity.URL) | Filters.caption_entity(MessageEntity.URL),
+              'documents': Filters.document & CustomFilters.mime_type("application/vnd.android.package-archive") & ~Filters.animation,
+              'videos': Filters.video,
+              'videonotes': Filters.video_note,
+              'contacts': Filters.contact,
+              'photos': Filters.photo,
+              'gifs': Filters.animation,
+              'urls': Filters.entity(MessageEntity.URL) | Filters.caption_entity(MessageEntity.URL),
               'bots': Filters.status_update.new_chat_members,
               'forwards': Filters.forwarded,
               'games': Filters.game,
@@ -35,7 +35,7 @@ LOCK_TYPES = {'stickers': Filters.sticker,
 
 GIF = Filters.animation
 OTHER = Filters.game | Filters.sticker | GIF
-MEDIA = Filters.audio | Filters.document | Filters.video | Filters.video_note | Filters.voice | Filters.photo
+MEDIA = Filters.audio | Filters.document & CustomFilters.mime_type("application/vnd.android.package-archive") | Filters.video | Filters.video_note | Filters.voice | Filters.photo
 MESSAGES = Filters.text | Filters.contact | Filters.location | Filters.venue | Filters.command | MEDIA | OTHER
 PREVIEWS = Filters.entity("url")
 
