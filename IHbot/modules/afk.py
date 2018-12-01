@@ -22,7 +22,7 @@ def afk(bot: Bot, update: Update):
         reason = ""
 
     sql.set_afk(update.effective_user.id, reason)
-    update.effective_message.reply_text("{} is now AFK!".format(update.effective_user.first_name))
+    update.effective_message.reply_text("{} is now HIDING!".format(update.effective_user.first_name))
 
 
 @run_async
@@ -70,9 +70,9 @@ def check_afk(bot, update, user_id, fst_name):
         valid, reason = sql.check_afk_status(user_id)
         if valid:
             if not reason:
-                res = "{} is AFK!".format(fst_name)
+                res = "{} is HIDDEN!".format(fst_name)
             else:
-                res = "{} is AFK! says its because of:\n{}".format(fst_name, reason)
+                res = "{} is HIDDEN! says its because of:\n{}".format(fst_name, reason)
             message.reply_text(res)
 
 def __gdpr__(user_id):
